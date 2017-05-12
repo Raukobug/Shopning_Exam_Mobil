@@ -27,24 +27,18 @@ export class HomePage {
          error =>  this.errorMessage = <any>error);
   }
   SearchShops(ev: any) {
-    // Reset items back to all of the items
+
+    // Reset shops back to all of the shops
+    this.GetShops();
+
     // set val to the value of the searchbar
     let val = ev.target.value;
 
-    // if the value is an empty string don't filter the items
+    // if the value is an empty string don't filter the shops
     if (val && val.trim() != '') {
-      this.shops = this.shops.filter((item) => {
-        return item;
+      this.shops = this.shops.filter((shop) => {
+        return (shop.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
     }
   }
-  /*
-  "proxies": [
-    {
-      "path": "/api/accessLevels",
-      "proxyUrl": "http://localhost:8000/api/accessLevels"
-    }
-  ],
-  */
-
 }
