@@ -11,6 +11,7 @@ export class HomePage {
 
   //public accesslevels:Array<AccessLevel> = new Array<AccessLevel>();
   public shops:Array<Shops>;
+  public tempShops:Array<Shops>;
   errorMessage: string;
 
   constructor(public navCtrl: NavController, public rest: Rest) {
@@ -23,22 +24,22 @@ export class HomePage {
   GetShops() {
     this.rest.GetShops()
        .subscribe(
-         shops => this.shops = shops,
+         shops => { this.shops = shops; this.tempShops = shops } ,
          error =>  this.errorMessage = <any>error);
   }
   SearchShops(ev: any) {
 
-    // Reset shops back to all of the shops
-    this.GetShops();
+      // Reset shops back to all of the shops, except something faults. Possibly because of lack of promise
+      this.shops = this.tempShops;
 
-    // set val to the value of the searchbar
-    let val = ev.target.value;
+      // set val to the value of the searchbar
+      let val = ev.target.value;
 
-    // if the value is an empty string don't filter the shops
-    if (val && val.trim() != '') {
-      this.shops = this.shops.filter((shop) => {
-        return (shop.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      })
-    }
+      // if the value is an empty string don't filter the shops
+      if (val && val.trim() != '') {
+        this.shops = this.shops.filter((shop) => {
+          return (shop.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        })
+      }
   }
 }
