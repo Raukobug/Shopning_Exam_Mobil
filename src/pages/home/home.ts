@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Shops } from '../../models/shops';
 import { Rest } from '../../providers/rest';
+import { ItemPage } from '../item/item';
 
 @Component({
   selector: 'page-home',
@@ -42,4 +43,11 @@ export class HomePage {
         })
       }
   }
+  pushPage(id)
+  {
+    this.navCtrl.push(ItemPage, {
+      id: id
+    });
+  }
+
 }

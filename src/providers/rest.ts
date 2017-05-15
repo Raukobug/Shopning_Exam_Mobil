@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { AccessLevel } from '../models/accessLevels';
 import { Products } from '../models/products';
 import { Shops } from '../models/shops';
+import { Items } from '../models/items';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
@@ -30,6 +31,12 @@ export class Rest {
   }
   GetShops(): Observable<Array<Shops>> {
     this.apiUrl = 'api/shops';
+    return this.http.get(this.apiUrl)
+                    .map(this.extractData)
+                    .catch(this.handleError);
+  }
+  GetItems(): Observable<Array<Items>> {
+    this.apiUrl = 'api/items';
     return this.http.get(this.apiUrl)
                     .map(this.extractData)
                     .catch(this.handleError);
