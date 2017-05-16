@@ -10,7 +10,6 @@ import { ItemPage } from '../item/item';
 })
 export class HomePage {
 
-  //public accesslevels:Array<AccessLevel> = new Array<AccessLevel>();
   public shops:Array<Shops>;
   public tempShops:Array<Shops>;
   errorMessage: string;

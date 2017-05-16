@@ -35,6 +35,12 @@ export class Rest {
                     .map(this.extractData)
                     .catch(this.handleError);
   }
+  GetShop(id): Observable<Shops> {
+    this.apiUrl = 'api/shops/' + id;
+    return this.http.get(this.apiUrl)
+                    .map(this.extractData)
+                    .catch(this.handleError);
+  }
   GetItems(): Observable<Array<Items>> {
     this.apiUrl = 'api/items';
     return this.http.get(this.apiUrl)

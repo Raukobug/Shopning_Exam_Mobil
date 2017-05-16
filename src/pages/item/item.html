@@ -7,16 +7,30 @@
 </ion-header>
 
 <ion-content>
-<ion-searchbar (ionInput)="SearchItems($event)"></ion-searchbar>
+  <ion-searchbar (ionInput)="SearchItems($event)"></ion-searchbar>
+
+  <ion-item *ngIf="shop">
+    <button  color="danger" icon-left="" ion-button="" class="disable-hover button button-ios button-default button-default-ios button-ios-danger" (click)="RemoveShop()">
+      <span class="button-inner">
+          <ion-icon name="close" role="img" class="icon icon-ios ion-ios-close" aria-label="close"></ion-icon>
+              {{ shop.name }}
+        </span>
+    </button>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Show discounts only</ion-label>
+    <ion-toggle [(ngModel)]="discount" (ionChange)="Change()"></ion-toggle>
+  </ion-item>
+
   <ion-list>
     <ion-item *ngFor="let i of items">
 
-        <ion-thumbnail item-left>
-          <img src="#">
-        </ion-thumbnail>
-        <h2>{{i.product.name}}</h2>
-        <h2 item-right>Price: {{i.price}},-</h2>
+        <h2 item-left>{{ i.shop.name }} | {{i.product.name}}</h2>
+        <h2 item-right>Price: </h2>
+        <h2 *ngIf="i.discount == 0" item-right>{{i.price}},-</h2>
+        <h2 *ngIf="i.discount > 0" item-right class="strikethrough">{{i.price}},-</h2>
+        <h2 *ngIf="i.discount > 0" item-right>{{i.discount}},-</h2>
     </ion-item>
-
   </ion-list>
 </ion-content>
