@@ -1,7 +1,5 @@
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { AccessLevel } from '../models/accessLevels';
-import { Products } from '../models/products';
 import { Shops } from '../models/shops';
 import { Items } from '../models/items';
 import 'rxjs/add/operator/catch';
@@ -16,18 +14,6 @@ export class Rest {
 
   constructor(public http: Http) {
    
-  }
-  GetAccessLevels(): Observable<Array<AccessLevel>> {
-    this.apiUrl = 'api/accessLevels';
-    return this.http.get(this.apiUrl)
-                    .map(this.extractData)
-                    .catch(this.handleError);
-  }
-  GetProducts(): Observable<Array<Products>> {
-    this.apiUrl = 'api/products';
-    return this.http.get(this.apiUrl)
-                    .map(this.extractData)
-                    .catch(this.handleError);
   }
   GetShops(): Observable<Array<Shops>> {
     this.apiUrl = 'api/shops';

@@ -19,14 +19,13 @@
   </ion-item>
 
   <ion-item>
-    <ion-label>Show discounts only</ion-label>
+    <ion-label><strong>Discounts</strong></ion-label>
     <ion-toggle [(ngModel)]="discount" (ionChange)="Change()"></ion-toggle>
   </ion-item>
 
   <ion-list>
     <ion-item *ngFor="let i of items">
-
-        <h2 item-left>{{ i.shop.name }} | {{i.product.name}}</h2>
+        <h2 >{{ i.shop.name }} | {{i.product.name}}</h2>
         <h2 item-right>Price: </h2>
         <h2 *ngIf="i.discount == 0" item-right>{{i.price}},-</h2>
         <h2 *ngIf="i.discount > 0" item-right class="strikethrough">{{i.price}},-</h2>

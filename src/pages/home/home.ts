@@ -4,6 +4,7 @@ import { Shops } from '../../models/shops';
 import { Rest } from '../../providers/rest';
 import { ItemPage } from '../item/item';
 
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -18,7 +19,9 @@ export class HomePage {
   
   }
   ionViewDidLoad() {
+    
     this.GetShops();
+    
   }
 
   GetShops() {
@@ -29,7 +32,7 @@ export class HomePage {
   }
   SearchShops(ev: any) {
 
-      // Reset shops back to all of the shops, except something faults. Possibly because of lack of promise
+      // resets shops so that it continues to search when you delete
       this.shops = this.tempShops;
 
       // set val to the value of the searchbar
@@ -47,6 +50,7 @@ export class HomePage {
     this.navCtrl.push(ItemPage, {
       id: id
     });
+    this.navCtrl
   }
 
 }
