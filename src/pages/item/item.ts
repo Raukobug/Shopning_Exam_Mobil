@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Rest } from '../../providers/rest';
 import { Items } from '../../models/items';
 import { Shops } from '../../models/shops';
-import { DateObject } from '../../models/dateObject';
 import { NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
@@ -35,57 +34,59 @@ export class ItemPage {
     }
 
     //Local storage for discount toggle
-    
-    if(this.storage.get('discount'))
-    {
-      this.storage.get('discount').then((val) => {
+    this.storage.get('discount').then((val) => {
+      if(val !== null)
+      {
         this.discount = val;
-      });
-    }
-    else
-    {
-      this.storage.set('discount', this.discount);
-    }
+      }
+      else
+      {
+        this.storage.set('discount', this.discount);
+      }
+    });
 
-    //Local storage for date and shop visit
-    /*if(this.id)
+    //Local storage for date and visits
+    if(this.id)
     {
-      //if there is a local storage with visits
-      this.storage.get('visit').then((val) => {
-        if(val != null)
-        {      
-          //if the current date is the same as in local storage, then set visitsArray to be same value as local storage array 
-          if(val.filter(x => x.date === new Date))
+      this.storage.get('visitDate').then((val) => {
+        if(val !== null)
+        {
+          if(val === this.date)
           {
-            console.log("check 2");
-            this.visits = val;
+            this.storage.get('visits').then((val) => {
+              if(val != null)
+              {
+                this.visits = val;
+
+                if(!this.visits.find(x => x == this.id))
+                {
+                  console.log("this is where we will eventually make an API POST with visitstatistics")
+                  this.visits.push(this.id);
+                  this.storage.set("visits", this.visits);
+                }
+              }
+              else
+              {
+                this.storage.set("visits", this.visits);
+              }
+            });
           }
-          //if current date is not the same as in local storage, then create new visitsArray, with a new object with a shop_id reference and a current date
           else
           {
-            console.log("check 3");
-            let date = new Date();
-            let object = new DateObject();
-            object.date = date.toLocaleDateString();
-            object.shop_id = this.id;
-            this.storage.set('visit', this.visits);
-            this.visits.push(object);
+            this.storage.set("visitDate", this.date);
+            this.visits = [];
+            this.storage.set("visits", this.visits)
           }
         }
-        //if there isn't a local storage with visits, create one and then set array to contain new object
         else
         {
-          console.log("check 4");
-          let date = new Date().toLocaleDateString();
-          let object = new DateObject();
-          object.date = date;
-          object.shop_id = this.id;
-          this.storage.set('visit', object);
-          this.visits.push(object);
-          
+          this.storage.set("visitDate", this.date);
+          this.visits = [];
+          this.storage.set("visits", this.visits)
         }
-      });
-    }*/
+       });
+    }
+
   }
   GetItems() {
     if(this.id)
