@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Rest } from '../../providers/rest';
 import { Items } from '../../models/items';
 import { Shops } from '../../models/shops';
+import { VisitStatistics } from '../../models/visitStatistics';
 import { NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
@@ -18,6 +19,8 @@ export class ItemPage {
   errorMessage: string;
   public visits:Array<number>;
   public date:string;
+  public VisitStatistics:Array<VisitStatistics>;
+  public VisitStatistic:VisitStatistics;
 
   constructor(public navCtrl: NavController, private navParams: NavParams, public rest: Rest, private storage: Storage) {
     this.id = navParams.get('id');
@@ -25,8 +28,8 @@ export class ItemPage {
     this.discount = true;
   }
   ionViewDidLoad() {
-    console.log(this.date);
     this.GetItems();
+    this.GetVisit();
 
     if(this.id)
     {
@@ -45,29 +48,44 @@ export class ItemPage {
       }
     });
 
-    //Local storage for date and visits
+
+  }
+  StorageCheck()
+  {
+        //Local storage for date and visits
     if(this.id)
     {
+
       this.storage.get('visitDate').then((val) => {
         if(val !== null)
         {
+
           if(val === this.date)
           {
+
             this.storage.get('visits').then((val) => {
               if(val != null)
               {
+              
                 this.visits = val;
 
                 if(!this.visits.find(x => x == this.id))
-                {
-                  console.log("this is where we will eventually make an API POST with visitstatistics")
+                {                
                   this.visits.push(this.id);
                   this.storage.set("visits", this.visits);
+
+                  this.updateVisit();
+                }
+                else
+                {
+                  this.updateVisit();
                 }
               }
               else
               {
                 this.storage.set("visits", this.visits);
+
+                this.updateVisit();
               }
             });
           }
@@ -76,6 +94,8 @@ export class ItemPage {
             this.storage.set("visitDate", this.date);
             this.visits = [];
             this.storage.set("visits", this.visits)
+
+            this.updateVisit();
           }
         }
         else
@@ -83,11 +103,34 @@ export class ItemPage {
           this.storage.set("visitDate", this.date);
           this.visits = [];
           this.storage.set("visits", this.visits)
+
+          this.updateVisit();
         }
        });
     }
-
   }
+  updateVisit() {
+    let visit = new VisitStatistics();
+    visit = this.VisitStatistics.pop();
+    visit.visit_count = 1;
+
+    this.storage.get('visits').then((val) => {
+      if(val != null)
+      {
+        visit.unique_visit_count = 0;
+      }
+      else
+      {
+        visit.unique_visit_count = 1;
+      }
+      this.rest.UpdateVisit(visit).then((result) => {
+        console.log(result);
+      }, (err) => {
+        console.log(err);
+      });
+    });
+  }
+
   GetItems() {
     if(this.id)
     {
@@ -109,7 +152,16 @@ export class ItemPage {
           },
           error =>  this.errorMessage = <any>error);
     }
-
+  }
+  GetVisit() {
+    let newdate = this.date.split("/").join("-");
+    if(this.id)
+    {
+      this.rest.GetVisits()
+      .subscribe(
+         VisitStatistics => { this.VisitStatistics = VisitStatistics.filter(x => x.date.toString() == newdate && x.shop_id === this.id); this.StorageCheck(); },
+          error =>  this.errorMessage = <any>error);
+    }
   }
   GetShop() {
     this.rest.GetShop(this.id)

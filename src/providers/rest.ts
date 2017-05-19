@@ -2,6 +2,7 @@ import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Shops } from '../models/shops';
 import { Items } from '../models/items';
+import { VisitStatistics } from '../models/visitStatistics';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
@@ -33,7 +34,23 @@ export class Rest {
                     .map(this.extractData)
                     .catch(this.handleError);
   }
-  
+  GetVisits(): Observable<Array<VisitStatistics>> {
+    this.apiUrl = 'api/visitStatistics';
+    return this.http.get(this.apiUrl)
+                    .map(this.extractData)
+                    .catch(this.handleError);
+  }
+
+  UpdateVisit(data) {  
+    return new Promise((resolve, reject) => {
+      this.http.put(this.apiUrl ='api/visitStatistics/' + data.id, JSON.stringify(data))
+        .subscribe(res => {
+          resolve(res);
+        }, (err) => {
+          reject(err);
+        });
+    });
+  }
 
   private extractData(res: Response) {
     let body = res.json();
