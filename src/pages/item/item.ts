@@ -55,18 +55,14 @@ export class ItemPage {
         //Local storage for date and visits
     if(this.id)
     {
-
       this.storage.get('visitDate').then((val) => {
         if(val !== null)
         {
-
           if(val === this.date)
           {
-
             this.storage.get('visits').then((val) => {
               if(val != null)
-              {
-              
+              {        
                 this.visits = val;
 
                 if(!this.visits.find(x => x == this.id))
@@ -74,18 +70,18 @@ export class ItemPage {
                   this.visits.push(this.id);
                   this.storage.set("visits", this.visits);
 
-                  this.updateVisit();
+                  this.updateVisit(true);
                 }
                 else
                 {
-                  this.updateVisit();
+                  this.updateVisit(false);
                 }
               }
               else
               {
+                this.visits.push(this.id);
                 this.storage.set("visits", this.visits);
-
-                this.updateVisit();
+                this.updateVisit(true);
               }
             });
           }
@@ -93,41 +89,41 @@ export class ItemPage {
           {
             this.storage.set("visitDate", this.date);
             this.visits = [];
+            this.visits.push(this.id);
             this.storage.set("visits", this.visits)
 
-            this.updateVisit();
+            this.updateVisit(true);
           }
         }
         else
         {
           this.storage.set("visitDate", this.date);
           this.visits = [];
+          this.visits.push(this.id);
           this.storage.set("visits", this.visits)
 
-          this.updateVisit();
+          this.updateVisit(true);
         }
        });
     }
   }
-  updateVisit() {
+  updateVisit($bool) {
     let visit = new VisitStatistics();
     visit = this.VisitStatistics.pop();
     visit.visit_count = 1;
 
-    this.storage.get('visits').then((val) => {
-      if(val != null)
-      {
-        visit.unique_visit_count = 0;
-      }
-      else
-      {
-        visit.unique_visit_count = 1;
-      }
-      this.rest.UpdateVisit(visit).then((result) => {
-        console.log(result);
-      }, (err) => {
-        console.log(err);
-      });
+    if($bool)
+    {
+      visit.unique_visit_count = 1;
+    }
+    else
+    {
+      visit.unique_visit_count = 0;
+    }
+    this.rest.UpdateVisit(visit).then((result) => {
+      console.log(result);
+    }, (err) => {
+      console.log(err);
     });
   }
 

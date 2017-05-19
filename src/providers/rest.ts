@@ -1,4 +1,5 @@
-import { Http, Response } from '@angular/http';
+import { Http, Response, RequestOptions, RequestMethod } from '@angular/http';
+import { Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Shops } from '../models/shops';
 import { Items } from '../models/items';
@@ -41,9 +42,15 @@ export class Rest {
                     .catch(this.handleError);
   }
 
-  UpdateVisit(data) {  
+  UpdateVisit(data) {
+  // myHeaders.append('Content-type', 'application/x-www-form-urlencoded');
+   
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let options = new RequestOptions({ headers: headers });
+
     return new Promise((resolve, reject) => {
-      this.http.put(this.apiUrl ='api/visitStatistics/' + data.id, JSON.stringify(data))
+      this.http.put(this.apiUrl ='api/visitStatistics/' + data.id, JSON.stringify(data), options)
         .subscribe(res => {
           resolve(res);
         }, (err) => {
