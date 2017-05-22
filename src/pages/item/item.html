@@ -1,9 +1,11 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Items
-    </ion-title>
-  </ion-navbar>
+  <ion-toolbar color="primary">
+    <ion-navbar>
+      <ion-title>
+        Items
+      </ion-title>
+    </ion-navbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
@@ -19,23 +21,22 @@
   </ion-item>
 
   <ion-item>
-    <ion-label><strong>Discounts</strong></ion-label>
+    <ion-label><strong>Discounts only</strong></ion-label>
     <ion-toggle [(ngModel)]="discount" (ionChange)="Change()"></ion-toggle>
   </ion-item>
 
   <ion-list>
     <ion-item *ngFor="let i of items">
-        <h2 >{{ i.shop.name }} | {{i.product.name}}</h2>
-        <h2 item-right>Price: </h2>
+      <div>
+        <p>{{ i.shop.name }}</p>
+        <h2>{{i.product.name}}</h2>
+      </div>
+      
+      <div item-right>
         <h2 *ngIf="i.discount == 0" item-right>{{i.price}},-</h2>
         <h2 *ngIf="i.discount > 0" item-right class="strikethrough">{{i.price}},-</h2>
         <h2 *ngIf="i.discount > 0" item-right>{{i.discount}},-</h2>
-    </ion-item>
-  </ion-list>
-
-  <ion-list>
-    <ion-item>
-       <!--{{ VisitStatistic.date }}-->
+      </div>
     </ion-item>
   </ion-list>
   

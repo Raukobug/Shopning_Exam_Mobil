@@ -133,8 +133,8 @@ export class ItemPage {
       this.rest.GetItems()
       .subscribe(
          items => { 
-          if(this.discount) { this.items = items.filter(x => x.shop_id === this.id) } else { this.items = items.filter(x => x.shop_id === this.id && x.discount !== 0) };
-          if(this.discount) { this.tempItems = items.filter(x => x.shop_id === this.id) } else { this.tempItems = items.filter(x => x.shop_id === this.id && x.discount !== 0) };
+          if(!this.discount) { this.items = items.filter(x => x.shop_id === this.id) } else { this.items = items.filter(x => x.shop_id === this.id && x.discount !== 0) };
+          if(!this.discount) { this.tempItems = items.filter(x => x.shop_id === this.id) } else { this.tempItems = items.filter(x => x.shop_id === this.id && x.discount !== 0) };
           },
           error =>  this.errorMessage = <any>error);
     }
@@ -143,8 +143,8 @@ export class ItemPage {
       this.rest.GetItems()
         .subscribe(
           items => { 
-          if(this.discount) { this.items = items } else { this.items = items.filter(x => x.discount !== 0) };
-          if(this.discount) { this.tempItems = items } else { this.tempItems = items.filter(x => x.discount !== 0) };
+          if(!this.discount) { this.items = items } else { this.items = items.filter(x => x.discount !== 0) };
+          if(!this.discount) { this.tempItems = items } else { this.tempItems = items.filter(x => x.discount !== 0) };
           },
           error =>  this.errorMessage = <any>error);
     }

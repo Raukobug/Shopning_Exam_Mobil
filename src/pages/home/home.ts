@@ -14,14 +14,19 @@ export class HomePage {
   public shops:Array<Shops>;
   public tempShops:Array<Shops>;
   errorMessage: string;
+  public day:String;
+  public time:string;
 
   constructor(public navCtrl: NavController, public rest: Rest) {
-  
+    let date = new Date();
+    let days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    this.day = days[date.getDay()];
+
+    this.time = date.getHours().toLocaleString();
+
   }
-  ionViewDidLoad() {
-    
-    this.GetShops();
-    
+  ionViewDidLoad() {   
+    this.GetShops();  
   }
 
   GetShops() {

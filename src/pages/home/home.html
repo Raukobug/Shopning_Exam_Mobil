@@ -1,13 +1,16 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Mall
-    </ion-title>
-  </ion-navbar>
+  <ion-toolbar color="primary">
+    <ion-navbar>
+      <ion-title>
+        Shops
+      </ion-title>
+    </ion-navbar>
+
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-<ion-searchbar (ionInput)="SearchShops($event)"></ion-searchbar>
+  <ion-searchbar (ionInput)="SearchShops($event)"></ion-searchbar>
   <ion-list>
     <ion-item *ngFor="let s of shops" (click)="pushPage(s.id)">
 
@@ -15,9 +18,22 @@
           <img src="#">
         </ion-thumbnail>
         <h2>{{s.name}}</h2>
+        <div *ngFor="let o of s.opening_hour">
 
+          <div *ngIf="day == o.day">
+            <p>Open: {{ o.open }}</p>
+            <p>Close: {{ o.close }}</p>
+
+            <div item-right *ngIf="o.open < time && o.close > time">
+              <h2 item-right style="color:green">Open</h2>
+            </div>
+            <div  item-right *ngIf="o.open > time || o.close < time">
+              <h2 item-right style="color:red">Closed</h2>
+            </div>
+          </div>
+
+        </div>
     </ion-item>
-
   </ion-list>
 
 </ion-content>
