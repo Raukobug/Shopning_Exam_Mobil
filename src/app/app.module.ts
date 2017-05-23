@@ -14,6 +14,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { IonicStorageModule } from '@ionic/storage';
+import { Openinghours } from '../pipes/opening-hours-to-number'
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { IonicStorageModule } from '@ionic/storage';
     OfferPage,
     ItemPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    Openinghours
   ],
   imports: [
     BrowserModule,

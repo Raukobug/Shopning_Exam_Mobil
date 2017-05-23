@@ -4,7 +4,6 @@ import { Shops } from '../../models/shops';
 import { Rest } from '../../providers/rest';
 import { ItemPage } from '../item/item';
 
-
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -15,14 +14,22 @@ export class HomePage {
   public tempShops:Array<Shops>;
   errorMessage: string;
   public day:String;
-  public time:string;
+  public timeInHours:number;
+  public timeInMinutes:number;
+  public time:number;
+  public tempTime:string;
 
   constructor(public navCtrl: NavController, public rest: Rest) {
     let date = new Date();
     let days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
     this.day = days[date.getDay()];
 
-    this.time = date.getHours().toLocaleString();
+    /*this.time = date.getHours().toLocaleString();
+    Number(this.time);*/
+    this.timeInHours = date.getHours();
+    this.timeInMinutes = date.getMinutes();
+    this.tempTime = "" + this.timeInHours + "." + this.timeInMinutes;
+    Number(this.tempTime); 
 
   }
   ionViewDidLoad() {   

@@ -24,16 +24,30 @@
             <p>Open: {{ o.open }}</p>
             <p>Close: {{ o.close }}</p>
 
-            <div item-right *ngIf="o.open < time && o.close > time">
+            <div item-right *ngIf="(o.open | Openinghours) < tempTime && (o.close | Openinghours) > tempTime">
               <h2 item-right style="color:green">Open</h2>
             </div>
-            <div  item-right *ngIf="o.open > time || o.close < time">
+            <div  item-right *ngIf="(o.open | Openinghours) > tempTime || (o.close | Openinghours) < tempTime">
               <h2 item-right style="color:red">Closed</h2>
             </div>
+
+              <!--<div item-right *ngIf="(o.open | Openinghours) < tempTime">
+                <p>{{ o.open | Openinghours }}</p>
+                <p>{{ o.open }}</p>
+              </div>
+            {{ tempTime }}-->
+              <!--<div item-right *ngIf="3.37 > 3.00">
+                <p>{{ o.open | Openinghours }}</p>
+                <p>{{ o.open }}</p>
+                <p>{{ time }}</p>
+              </div>-->
+
+
           </div>
 
         </div>
     </ion-item>
   </ion-list>
+
 
 </ion-content>

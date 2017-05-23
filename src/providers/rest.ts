@@ -1,4 +1,4 @@
-import { Http, Response, RequestOptions, RequestMethod } from '@angular/http';
+import { Http, Response, RequestOptions } from '@angular/http';
 import { Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Shops } from '../models/shops';
