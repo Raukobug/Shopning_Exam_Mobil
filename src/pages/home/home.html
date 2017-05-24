@@ -15,7 +15,7 @@
     <ion-item *ngFor="let s of shops" (click)="pushPage(s.id)">
 
         <ion-thumbnail item-left>
-          <img src="#">
+          <img src="{{s.image}}">
         </ion-thumbnail>
         <h2>{{s.name}}</h2>
         <div *ngFor="let o of s.opening_hour">
