@@ -22,10 +22,14 @@ export class ItemPage {
   public VisitStatistics:Array<VisitStatistics>;
   public VisitStatistic:VisitStatistics;
 
+  public emptyList:Boolean = false;
+
   constructor(public navCtrl: NavController, private navParams: NavParams, public rest: Rest, private storage: Storage) {
     this.id = navParams.get('id');
     this.date = new Date().toJSON().slice(0,10).replace(/-/g,'/');
     this.discount = true;
+
+    this.items = [];
   }
   ionViewDidLoad() {
     this.GetItems();
@@ -135,6 +139,7 @@ export class ItemPage {
          items => { 
           if(!this.discount) { this.items = items.filter(x => x.shop_id === this.id) } else { this.items = items.filter(x => x.shop_id === this.id && x.discount !== 0) };
           if(!this.discount) { this.tempItems = items.filter(x => x.shop_id === this.id) } else { this.tempItems = items.filter(x => x.shop_id === this.id && x.discount !== 0) };
+          this.emptyList = true;
           },
           error =>  this.errorMessage = <any>error);
     }
@@ -145,6 +150,7 @@ export class ItemPage {
           items => { 
           if(!this.discount) { this.items = items } else { this.items = items.filter(x => x.discount !== 0) };
           if(!this.discount) { this.tempItems = items } else { this.tempItems = items.filter(x => x.discount !== 0) };
+          this.emptyList = true;
           },
           error =>  this.errorMessage = <any>error);
     }

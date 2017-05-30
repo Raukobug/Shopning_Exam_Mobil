@@ -13,9 +13,10 @@ export class OfferPage {
   public items:Array<Items>;
   public tempItems:Array<Items>;
   errorMessage: string;
+  public emptyOffer:Boolean = false;
 
   constructor(public navCtrl: NavController, public rest: Rest) {
-
+    this.items = [];
   }
 
   ionViewDidLoad() {
@@ -24,8 +25,9 @@ export class OfferPage {
   GetItems() {
     this.rest.GetItems()
        .subscribe(
-         items => { this.items = items.filter(x => x.offer !== 0); this.tempItems = items.filter(x => x.offer !== 0) } ,
+         items => { this.items = items.filter(x => x.offer !== 0); this.tempItems = items.filter(x => x.offer !== 0); if(items.filter(x => x.offer == 0).length == 0) this.emptyOffer = true; } ,
          error =>  this.errorMessage = <any>error);
+         
   }
   SearchItems(ev: any) {
 

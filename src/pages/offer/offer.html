@@ -22,4 +22,12 @@
     </ion-item>
 
   </ion-list>
+
+  <ion-grid>
+    <ion-row *ngIf="emptyOffer">
+      <ion-col col-12 style="text-align:center;">
+        <h2 style="text-align: center">There are currently no offers available :(</h2>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

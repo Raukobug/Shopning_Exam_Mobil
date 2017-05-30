@@ -19,20 +19,19 @@ export class HomePage {
   public time:number;
   public tempTime:string;
 
-  public navigator: any;
-  public Connection: any; 
+  public emptyList:Boolean;
 
   constructor(public navCtrl: NavController, public rest: Rest) {
     let date = new Date();
     let days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
     this.day = days[date.getDay()];
 
-    /*this.time = date.getHours().toLocaleString();
-    Number(this.time);*/
     this.timeInHours = date.getHours();
     this.timeInMinutes = date.getMinutes();
     this.tempTime = "" + this.timeInHours + "." + this.timeInMinutes;
-    Number(this.tempTime); 
+    this.time = Number(this.tempTime);
+
+    this.shops =  [];
 
   }
   ionViewDidLoad() {   
@@ -43,7 +42,7 @@ export class HomePage {
   GetShops() {
     this.rest.GetShops()
        .subscribe(
-         shops => { this.shops = shops; this.tempShops = shops } ,
+         shops => { this.shops = shops; this.tempShops = shops; this.emptyList = false; } ,
          error =>  this.errorMessage = <any>error);
   }
   SearchShops(ev: any) {

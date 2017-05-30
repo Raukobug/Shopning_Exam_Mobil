@@ -11,8 +11,9 @@
 
 <ion-content>
   <ion-searchbar (ionInput)="SearchShops($event)"></ion-searchbar>
+
   <ion-list>
-    <ion-item *ngFor="let s of shops" (click)="pushPage(s.id)" >
+    <ion-item *ngFor="let s of shops" (click)="pushPage(s.id)">
 
         <ion-thumbnail item-left>
           <img src="{{s.image}}">
@@ -24,23 +25,12 @@
             <p>Open: {{ o.open }}</p>
             <p>Close: {{ o.close }}</p>
 
-            <div item-right *ngIf="(o.open | Openinghours) < tempTime && (o.close | Openinghours) > tempTime">
+            <div item-right *ngIf="(o.open | Openinghours) < time && (o.close | Openinghours) > time">
               <h2 item-right style="color:green">Open</h2>
             </div>
-            <div  item-right *ngIf="(o.open | Openinghours) > tempTime || (o.close | Openinghours) < tempTime">
+            <div  item-right *ngIf="(o.open | Openinghours) > time || (o.close | Openinghours) < time">
               <h2 item-right style="color:red">Closed</h2>
             </div>
-
-              <!--<div item-right *ngIf="(o.open | Openinghours) < tempTime">
-                <p>{{ o.open | Openinghours }}</p>
-                <p>{{ o.open }}</p>
-              </div>
-            {{ tempTime }}-->
-              <!--<div item-right *ngIf="3.37 > 3.00">
-                <p>{{ o.open | Openinghours }}</p>
-                <p>{{ o.open }}</p>
-                <p>{{ time }}</p>
-              </div>-->
 
           </div>
         </div>
@@ -48,5 +38,13 @@
     </ion-item>
   </ion-list>
 
+<ion-grid>
+  <ion-row *ngIf="emptyList">
+    <ion-col col-12 style="text-align:center;">
+      <ion-icon ios="ios-list" md="md-list"></ion-icon>
+      <h2 style="text-align: center">The list is currently Empty :(</h2>
+    </ion-col>
+  </ion-row>
+</ion-grid>
 
 </ion-content>
