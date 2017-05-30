@@ -1,10 +1,10 @@
 {
   "name": "exam_sem_7",
-  "app_id": "1e62b07b",
+  "app_id": "4b270738",
   "proxies": [
     {
       "path": "/api",
-      "proxyUrl": "http://localhost:8000/api"
+      "proxyUrl": "http://207.154.230.236/api"
     }
   ],
   "v2": true,
