@@ -12,7 +12,7 @@
 <ion-content>
   <ion-searchbar (ionInput)="SearchShops($event)"></ion-searchbar>
   <ion-list>
-    <ion-item *ngFor="let s of shops" (click)="pushPage(s.id)">
+    <ion-item *ngFor="let s of shops" (click)="pushPage(s.id)" >
 
         <ion-thumbnail item-left>
           <img src="#">
@@ -42,10 +42,9 @@
                 <p>{{ time }}</p>
               </div>-->
 
-
           </div>
-
         </div>
+
     </ion-item>
   </ion-list>
 

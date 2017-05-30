@@ -19,6 +19,9 @@ export class HomePage {
   public time:number;
   public tempTime:string;
 
+  public navigator: any;
+  public Connection: any; 
+
   constructor(public navCtrl: NavController, public rest: Rest) {
     let date = new Date();
     let days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
@@ -34,6 +37,7 @@ export class HomePage {
   }
   ionViewDidLoad() {   
     this.GetShops();  
+
   }
 
   GetShops() {
