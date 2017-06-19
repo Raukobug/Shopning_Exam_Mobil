@@ -65,7 +65,7 @@ export class HomePage {
     this.navCtrl.push(ItemPage, {
       id: id
     });
-    this.navCtrl
+    //this.navCtrl
   }
 
 }

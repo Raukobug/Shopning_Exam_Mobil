@@ -50,7 +50,9 @@ export class ItemPage {
       {
         this.storage.set('discount', this.discount);
       }
-    });
+    }).catch((err) => {
+        console.log(err.message);
+    });;
 
 
   }
